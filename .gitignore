@@ -1,0 +1,57 @@
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Data
+01_data/raw/*
+01_data/processed/*
+01_data/historical/*
+01_data/odds/*
+01_data/news/*
+01_data/injuries/*
+01_data/players/*
+01_data/stats/*
+01_data/teams/*
+01_data/xg/*
+
+# Models
+03_models/*
+
+# Backtest outputs
+05_backtest/*
+
+# ML artifacts
+06_machine_learning/models/*
+06_machine_learning/training/*
+06_machine_learning/drift/*
+
+# Logs
+14_logs/*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.bak
+
+# OS
+.DS_Store
+Thumbs.db

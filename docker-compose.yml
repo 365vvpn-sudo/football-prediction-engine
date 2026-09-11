@@ -1,0 +1,12 @@
+services:
+
+  app:
+    image: python:3.10-slim
+    container_name: football_prediction_app
+    working_dir: /app
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    command: ["python", "-c", "print('Football Prediction Engine container is ready.')"]
+    restart: unless-stopped
