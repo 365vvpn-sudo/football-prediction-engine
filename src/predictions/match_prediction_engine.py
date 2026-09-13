@@ -23,6 +23,10 @@ from src.models.statistical.expected_value_engine import ExpectedValueEngine
 LEAGUE_STRENGTH_WEIGHTS: Dict[str, float] = {
     "ENGLAND_PREMIER_LEAGUE": 0.80,
     "SPAIN_LALIGA": 0.80,
+    "GERMANY_BUNDESLIGA": 0.90,
+    "ENGLAND_CHAMPIONSHIP": 0.60,
+    "FRANCE_LIGUE_1": 0.80,
+    "ITALY_SERIE_A": 0.90,
 }
 DEFAULT_STRENGTH_WEIGHT = 0.20
 DIXON_COLES_RHO = -0.05
