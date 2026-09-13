@@ -1,0 +1,250 @@
+Walk-Forward + Calibration Backtest (v4 -- incremental O(n), multi-season combined)
+
+==========================================================================================
+ENGLAND_PREMIER_LEAGUE | seasons=2019/2020..2025/2026 (7 files) | matches=2660 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=2553 | MAE=0.9558
+  weight=0.60 | n=2553 | MAE=0.9492
+  weight=0.70 | n=2553 | MAE=0.9446
+  weight=0.80 | n=2553 | MAE=0.9426
+  weight=0.90 | n=2553 | MAE=0.9428
+  weight=1.00 | n=2553 | MAE=0.9453
+  weight=1.10 | n=2553 | MAE=0.9497
+  weight=1.20 | n=2553 | MAE=0.9556
+  >> BEST weight for ENGLAND_PREMIER_LEAGUE: 0.80 (MAE=0.9426)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['ENGLAND_PREMIER_LEAGUE'] = 0.80
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 766 BrierRaw=0.0506 BrierCal=0.0506 ECERaw=0.0027 ECECal=0.0019 Improve=-0.0000
+  UNDER_0.5    n= 766 BrierRaw=0.0506 BrierCal=0.0506 ECERaw=0.0026 ECECal=0.0019 Improve=-0.0001
+  OVER_1.5     n= 766 BrierRaw=0.1578 BrierCal=0.1580 ECERaw=0.0386 ECECal=0.0353 Improve=-0.0002
+  UNDER_1.5    n= 766 BrierRaw=0.1578 BrierCal=0.1580 ECERaw=0.0389 ECECal=0.0362 Improve=-0.0002
+  OVER_2.5     n= 766 BrierRaw=0.2476 BrierCal=0.2456 ECERaw=0.0551 ECECal=0.0206 Improve=+0.0019
+  UNDER_2.5    n= 766 BrierRaw=0.2476 BrierCal=0.2457 ECERaw=0.0540 ECECal=0.0197 Improve=+0.0019
+  OVER_3.5     n= 766 BrierRaw=0.2222 BrierCal=0.2195 ECERaw=0.0664 ECECal=0.0533 Improve=+0.0027
+  UNDER_3.5    n= 766 BrierRaw=0.2222 BrierCal=0.2194 ECERaw=0.0664 ECECal=0.0528 Improve=+0.0028
+  BTTS_YES     n= 766 BrierRaw=0.2463 BrierCal=0.2456 ECERaw=0.0306 ECECal=0.0322 Improve=+0.0007
+  BTTS_NO      n= 766 BrierRaw=0.2463 BrierCal=0.2456 ECERaw=0.0306 ECECal=0.0323 Improve=+0.0007
+  HOME_WIN     n= 766 BrierRaw=0.2168 BrierCal=0.2181 ECERaw=0.0244 ECECal=0.0352 Improve=-0.0014
+  DRAW         n= 766 BrierRaw=0.1867 BrierCal=0.1867 ECERaw=0.0195 ECECal=0.0292 Improve=+0.0000
+  AWAY_WIN     n= 766 BrierRaw=0.1976 BrierCal=0.1975 ECERaw=0.0356 ECECal=0.0290 Improve=+0.0001
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 766 BrierRaw=0.1037 BrierCal=0.1024 ECERaw=0.0451 ECECal=0.0275 Improve=+0.0013
+  SHOTS_OVER_21.5 n= 766 BrierRaw=0.1849 BrierCal=0.1811 ECERaw=0.0600 ECECal=0.0291 Improve=+0.0037
+  SHOTS_OVER_24.5 n= 766 BrierRaw=0.2427 BrierCal=0.2397 ECERaw=0.0508 ECECal=0.0308 Improve=+0.0029
+  SHOTS_OVER_27.5 n= 766 BrierRaw=0.2267 BrierCal=0.2243 ECERaw=0.0664 ECECal=0.0335 Improve=+0.0025
+  SHOTS_UNDER_18.5 n= 766 BrierRaw=0.1037 BrierCal=0.1024 ECERaw=0.0451 ECECal=0.0257 Improve=+0.0013
+  SHOTS_UNDER_21.5 n= 766 BrierRaw=0.1849 BrierCal=0.1811 ECERaw=0.0600 ECECal=0.0270 Improve=+0.0038
+  SHOTS_UNDER_24.5 n= 766 BrierRaw=0.2427 BrierCal=0.2397 ECERaw=0.0508 ECECal=0.0289 Improve=+0.0029
+  SHOTS_UNDER_27.5 n= 766 BrierRaw=0.2267 BrierCal=0.2242 ECERaw=0.0664 ECECal=0.0349 Improve=+0.0025
+
+==========================================================================================
+SPAIN_LALIGA | seasons=2019/2020..2024/2025 (7 files) | matches=2660 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=2552 | MAE=0.8603
+  weight=0.60 | n=2552 | MAE=0.8563
+  weight=0.70 | n=2552 | MAE=0.8539
+  weight=0.80 | n=2552 | MAE=0.8531
+  weight=0.90 | n=2552 | MAE=0.8543
+  weight=1.00 | n=2552 | MAE=0.8575
+  weight=1.10 | n=2552 | MAE=0.8621
+  weight=1.20 | n=2552 | MAE=0.8680
+  >> BEST weight for SPAIN_LALIGA: 0.80 (MAE=0.8531)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['SPAIN_LALIGA'] = 0.80
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 766 BrierRaw=0.0627 BrierCal=0.0625 ECERaw=0.0167 ECECal=0.0191 Improve=+0.0002
+  UNDER_0.5    n= 766 BrierRaw=0.0627 BrierCal=0.0624 ECERaw=0.0167 ECECal=0.0189 Improve=+0.0002
+  OVER_1.5     n= 766 BrierRaw=0.1977 BrierCal=0.1968 ECERaw=0.0330 ECECal=0.0179 Improve=+0.0009
+  UNDER_1.5    n= 766 BrierRaw=0.1977 BrierCal=0.1968 ECERaw=0.0330 ECECal=0.0178 Improve=+0.0009
+  OVER_2.5     n= 766 BrierRaw=0.2420 BrierCal=0.2431 ECERaw=0.0211 ECECal=0.0141 Improve=-0.0011
+  UNDER_2.5    n= 766 BrierRaw=0.2420 BrierCal=0.2431 ECERaw=0.0211 ECECal=0.0111 Improve=-0.0011
+  OVER_3.5     n= 766 BrierRaw=0.1835 BrierCal=0.1851 ECERaw=0.0169 ECECal=0.0095 Improve=-0.0016
+  UNDER_3.5    n= 766 BrierRaw=0.1835 BrierCal=0.1853 ECERaw=0.0169 ECECal=0.0103 Improve=-0.0018
+  BTTS_YES     n= 766 BrierRaw=0.2488 BrierCal=0.2477 ECERaw=0.0437 ECECal=0.0266 Improve=+0.0011
+  BTTS_NO      n= 766 BrierRaw=0.2488 BrierCal=0.2475 ECERaw=0.0436 ECECal=0.0252 Improve=+0.0013
+  HOME_WIN     n= 766 BrierRaw=0.2113 BrierCal=0.2094 ECERaw=0.0537 ECECal=0.0404 Improve=+0.0019
+  DRAW         n= 766 BrierRaw=0.1961 BrierCal=0.1961 ECERaw=0.0299 ECECal=0.0320 Improve=-0.0000
+  AWAY_WIN     n= 766 BrierRaw=0.1822 BrierCal=0.1821 ECERaw=0.0490 ECECal=0.0405 Improve=+0.0001
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 766 BrierRaw=0.1321 BrierCal=0.1329 ECERaw=0.0300 ECECal=0.0309 Improve=-0.0008
+  SHOTS_OVER_21.5 n= 766 BrierRaw=0.2129 BrierCal=0.2132 ECERaw=0.0300 ECECal=0.0273 Improve=-0.0003
+  SHOTS_OVER_24.5 n= 766 BrierRaw=0.2284 BrierCal=0.2308 ECERaw=0.0339 ECECal=0.0302 Improve=-0.0024
+  SHOTS_OVER_27.5 n= 766 BrierRaw=0.1796 BrierCal=0.1808 ECERaw=0.0262 ECECal=0.0107 Improve=-0.0012
+  SHOTS_UNDER_18.5 n= 766 BrierRaw=0.1321 BrierCal=0.1329 ECERaw=0.0300 ECECal=0.0293 Improve=-0.0008
+  SHOTS_UNDER_21.5 n= 766 BrierRaw=0.2129 BrierCal=0.2135 ECERaw=0.0300 ECECal=0.0200 Improve=-0.0007
+  SHOTS_UNDER_24.5 n= 766 BrierRaw=0.2284 BrierCal=0.2311 ECERaw=0.0339 ECECal=0.0302 Improve=-0.0027
+  SHOTS_UNDER_27.5 n= 766 BrierRaw=0.1796 BrierCal=0.1807 ECERaw=0.0262 ECECal=0.0109 Improve=-0.0011
+
+==========================================================================================
+GERMANY_BUNDESLIGA | seasons=2019/2020..2024/2025 (6 files) | matches=1836 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=1732 | MAE=1.0279
+  weight=0.60 | n=1732 | MAE=1.0226
+  weight=0.70 | n=1732 | MAE=1.0188
+  weight=0.80 | n=1732 | MAE=1.0168
+  weight=0.90 | n=1732 | MAE=1.0166
+  weight=1.00 | n=1732 | MAE=1.0182
+  weight=1.10 | n=1732 | MAE=1.0214
+  weight=1.20 | n=1732 | MAE=1.0263
+  >> BEST weight for GERMANY_BUNDESLIGA: 0.90 (MAE=1.0166)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['GERMANY_BUNDESLIGA'] = 0.90
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 520 BrierRaw=0.0578 BrierCal=0.0574 ECERaw=0.0152 ECECal=0.0128 Improve=+0.0004
+  UNDER_0.5    n= 520 BrierRaw=0.0578 BrierCal=0.0574 ECERaw=0.0152 ECECal=0.0127 Improve=+0.0004
+  OVER_1.5     n= 520 BrierRaw=0.1476 BrierCal=0.1456 ECERaw=0.0281 ECECal=0.0184 Improve=+0.0019
+  UNDER_1.5    n= 520 BrierRaw=0.1476 BrierCal=0.1456 ECERaw=0.0281 ECECal=0.0184 Improve=+0.0019
+  OVER_2.5     n= 520 BrierRaw=0.2406 BrierCal=0.2374 ECERaw=0.0431 ECECal=0.0245 Improve=+0.0032
+  UNDER_2.5    n= 520 BrierRaw=0.2406 BrierCal=0.2375 ECERaw=0.0431 ECECal=0.0242 Improve=+0.0032
+  OVER_3.5     n= 520 BrierRaw=0.2409 BrierCal=0.2376 ECERaw=0.0730 ECECal=0.0015 Improve=+0.0032
+  UNDER_3.5    n= 520 BrierRaw=0.2409 BrierCal=0.2377 ECERaw=0.0731 ECECal=0.0011 Improve=+0.0031
+  BTTS_YES     n= 520 BrierRaw=0.2390 BrierCal=0.2394 ECERaw=0.0631 ECECal=0.0191 Improve=-0.0004
+  BTTS_NO      n= 520 BrierRaw=0.2390 BrierCal=0.2396 ECERaw=0.0631 ECECal=0.0215 Improve=-0.0007
+  HOME_WIN     n= 520 BrierRaw=0.2185 BrierCal=0.2184 ECERaw=0.0689 ECECal=0.0587 Improve=+0.0002
+  DRAW         n= 520 BrierRaw=0.1983 BrierCal=0.1961 ECERaw=0.0589 ECECal=0.0336 Improve=+0.0021
+  AWAY_WIN     n= 520 BrierRaw=0.1968 BrierCal=0.1984 ECERaw=0.0371 ECECal=0.0314 Improve=-0.0016
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 520 BrierRaw=0.0680 BrierCal=0.0683 ECERaw=0.0234 ECECal=0.0214 Improve=-0.0002
+  SHOTS_OVER_21.5 n= 520 BrierRaw=0.1498 BrierCal=0.1554 ECERaw=0.0198 ECECal=0.0612 Improve=-0.0056
+  SHOTS_OVER_24.5 n= 520 BrierRaw=0.2412 BrierCal=0.2400 ECERaw=0.0551 ECECal=0.0650 Improve=+0.0012
+  SHOTS_OVER_27.5 n= 520 BrierRaw=0.2384 BrierCal=0.2365 ECERaw=0.0572 ECECal=0.0596 Improve=+0.0019
+  SHOTS_UNDER_18.5 n= 520 BrierRaw=0.0680 BrierCal=0.0683 ECERaw=0.0234 ECECal=0.0216 Improve=-0.0002
+  SHOTS_UNDER_21.5 n= 520 BrierRaw=0.1498 BrierCal=0.1556 ECERaw=0.0199 ECECal=0.0617 Improve=-0.0058
+  SHOTS_UNDER_24.5 n= 520 BrierRaw=0.2412 BrierCal=0.2399 ECERaw=0.0551 ECECal=0.0646 Improve=+0.0014
+  SHOTS_UNDER_27.5 n= 520 BrierRaw=0.2384 BrierCal=0.2368 ECERaw=0.0572 ECECal=0.0606 Improve=+0.0016
+
+==========================================================================================
+ENGLAND_CHAMPIONSHIP | seasons=2019/2020..2024/2025 (6 files) | matches=3312 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=3145 | MAE=0.8796
+  weight=0.60 | n=3145 | MAE=0.8787
+  weight=0.70 | n=3145 | MAE=0.8788
+  weight=0.80 | n=3145 | MAE=0.8799
+  weight=0.90 | n=3145 | MAE=0.8821
+  weight=1.00 | n=3145 | MAE=0.8854
+  weight=1.10 | n=3145 | MAE=0.8895
+  weight=1.20 | n=3145 | MAE=0.8944
+  >> BEST weight for ENGLAND_CHAMPIONSHIP: 0.60 (MAE=0.8787)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['ENGLAND_CHAMPIONSHIP'] = 0.60
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 944 BrierRaw=0.0675 BrierCal=0.0674 ECERaw=0.0082 ECECal=0.0057 Improve=+0.0001
+  UNDER_0.5    n= 944 BrierRaw=0.0675 BrierCal=0.0674 ECERaw=0.0082 ECECal=0.0065 Improve=+0.0000
+  OVER_1.5     n= 944 BrierRaw=0.2005 BrierCal=0.2007 ECERaw=0.0164 ECECal=0.0086 Improve=-0.0001
+  UNDER_1.5    n= 944 BrierRaw=0.2005 BrierCal=0.2008 ECERaw=0.0164 ECECal=0.0098 Improve=-0.0003
+  OVER_2.5     n= 944 BrierRaw=0.2452 BrierCal=0.2450 ECERaw=0.0227 ECECal=0.0223 Improve=+0.0003
+  UNDER_2.5    n= 944 BrierRaw=0.2452 BrierCal=0.2450 ECERaw=0.0227 ECECal=0.0229 Improve=+0.0002
+  OVER_3.5     n= 944 BrierRaw=0.1831 BrierCal=0.1836 ECERaw=0.0178 ECECal=0.0071 Improve=-0.0006
+  UNDER_3.5    n= 944 BrierRaw=0.1831 BrierCal=0.1837 ECERaw=0.0178 ECECal=0.0069 Improve=-0.0006
+  BTTS_YES     n= 944 BrierRaw=0.2456 BrierCal=0.2487 ECERaw=0.0078 ECECal=0.0180 Improve=-0.0030
+  BTTS_NO      n= 944 BrierRaw=0.2456 BrierCal=0.2487 ECERaw=0.0078 ECECal=0.0175 Improve=-0.0030
+  HOME_WIN     n= 944 BrierRaw=0.2367 BrierCal=0.2389 ECERaw=0.0134 ECECal=0.0128 Improve=-0.0022
+  DRAW         n= 944 BrierRaw=0.1936 BrierCal=0.1939 ECERaw=0.0088 ECECal=0.0123 Improve=-0.0003
+  AWAY_WIN     n= 944 BrierRaw=0.1965 BrierCal=0.1988 ECERaw=0.0168 ECECal=0.0195 Improve=-0.0024
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 944 BrierRaw=0.1365 BrierCal=0.1360 ECERaw=0.0361 ECECal=0.0136 Improve=+0.0005
+  SHOTS_OVER_21.5 n= 944 BrierRaw=0.2132 BrierCal=0.2150 ECERaw=0.0170 ECECal=0.0319 Improve=-0.0017
+  SHOTS_OVER_24.5 n= 944 BrierRaw=0.2417 BrierCal=0.2443 ECERaw=0.0227 ECECal=0.0292 Improve=-0.0026
+  SHOTS_OVER_27.5 n= 944 BrierRaw=0.1876 BrierCal=0.1905 ECERaw=0.0215 ECECal=0.0239 Improve=-0.0030
+  SHOTS_UNDER_18.5 n= 944 BrierRaw=0.1365 BrierCal=0.1359 ECERaw=0.0361 ECECal=0.0130 Improve=+0.0006
+  SHOTS_UNDER_21.5 n= 944 BrierRaw=0.2132 BrierCal=0.2148 ECERaw=0.0170 ECECal=0.0307 Improve=-0.0016
+  SHOTS_UNDER_24.5 n= 944 BrierRaw=0.2417 BrierCal=0.2443 ECERaw=0.0227 ECECal=0.0289 Improve=-0.0026
+  SHOTS_UNDER_27.5 n= 944 BrierRaw=0.1876 BrierCal=0.1906 ECERaw=0.0215 ECECal=0.0242 Improve=-0.0030
+
+==========================================================================================
+FRANCE_LIGUE_1 | seasons=2019/2020..2024/2025 (6 files) | matches=2031 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=1929 | MAE=0.9339
+  weight=0.60 | n=1929 | MAE=0.9282
+  weight=0.70 | n=1929 | MAE=0.9245
+  weight=0.80 | n=1929 | MAE=0.9230
+  weight=0.90 | n=1929 | MAE=0.9230
+  weight=1.00 | n=1929 | MAE=0.9247
+  weight=1.10 | n=1929 | MAE=0.9280
+  weight=1.20 | n=1929 | MAE=0.9328
+  >> BEST weight for FRANCE_LIGUE_1: 0.80 (MAE=0.9230)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['FRANCE_LIGUE_1'] = 0.80
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 579 BrierRaw=0.0596 BrierCal=0.0597 ECERaw=0.0055 ECECal=0.0035 Improve=-0.0001
+  UNDER_0.5    n= 579 BrierRaw=0.0596 BrierCal=0.0597 ECERaw=0.0055 ECECal=0.0035 Improve=-0.0001
+  OVER_1.5     n= 579 BrierRaw=0.1672 BrierCal=0.1668 ECERaw=0.0455 ECECal=0.0178 Improve=+0.0004
+  UNDER_1.5    n= 579 BrierRaw=0.1672 BrierCal=0.1668 ECERaw=0.0455 ECECal=0.0178 Improve=+0.0004
+  OVER_2.5     n= 579 BrierRaw=0.2493 BrierCal=0.2468 ECERaw=0.0582 ECECal=0.0186 Improve=+0.0025
+  UNDER_2.5    n= 579 BrierRaw=0.2493 BrierCal=0.2468 ECERaw=0.0582 ECECal=0.0186 Improve=+0.0025
+  OVER_3.5     n= 579 BrierRaw=0.2173 BrierCal=0.2153 ECERaw=0.0505 ECECal=0.0104 Improve=+0.0020
+  UNDER_3.5    n= 579 BrierRaw=0.2173 BrierCal=0.2153 ECERaw=0.0505 ECECal=0.0104 Improve=+0.0020
+  BTTS_YES     n= 579 BrierRaw=0.2516 BrierCal=0.2472 ECERaw=0.0520 ECECal=0.0070 Improve=+0.0045
+  BTTS_NO      n= 579 BrierRaw=0.2516 BrierCal=0.2472 ECERaw=0.0520 ECECal=0.0070 Improve=+0.0045
+  HOME_WIN     n= 579 BrierRaw=0.2212 BrierCal=0.2226 ECERaw=0.0245 ECECal=0.0368 Improve=-0.0014
+  DRAW         n= 579 BrierRaw=0.1749 BrierCal=0.1760 ECERaw=0.0296 ECECal=0.0433 Improve=-0.0011
+  AWAY_WIN     n= 579 BrierRaw=0.2015 BrierCal=0.2030 ECERaw=0.0422 ECECal=0.0334 Improve=-0.0015
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 579 BrierRaw=0.1037 BrierCal=0.1049 ECERaw=0.0237 ECECal=0.0081 Improve=-0.0012
+  SHOTS_OVER_21.5 n= 579 BrierRaw=0.1951 BrierCal=0.1975 ECERaw=0.0288 ECECal=0.0269 Improve=-0.0023
+  SHOTS_OVER_24.5 n= 579 BrierRaw=0.2443 BrierCal=0.2461 ECERaw=0.0466 ECECal=0.0444 Improve=-0.0019
+  SHOTS_OVER_27.5 n= 579 BrierRaw=0.2119 BrierCal=0.2149 ECERaw=0.0367 ECECal=0.0459 Improve=-0.0029
+  SHOTS_UNDER_18.5 n= 579 BrierRaw=0.1037 BrierCal=0.1049 ECERaw=0.0237 ECECal=0.0081 Improve=-0.0012
+  SHOTS_UNDER_21.5 n= 579 BrierRaw=0.1951 BrierCal=0.1975 ECERaw=0.0288 ECECal=0.0269 Improve=-0.0023
+  SHOTS_UNDER_24.5 n= 579 BrierRaw=0.2443 BrierCal=0.2461 ECERaw=0.0466 ECECal=0.0444 Improve=-0.0019
+  SHOTS_UNDER_27.5 n= 579 BrierRaw=0.2119 BrierCal=0.2149 ECERaw=0.0368 ECECal=0.0459 Improve=-0.0029
+
+==========================================================================================
+ITALY_SERIE_A | seasons=2019/2020..2024/2025 (6 files) | matches=2280 | shots_available=True
+==========================================================================================
+
+-- Expected Goals: strength_weight search (lower MAE is better) --
+  weight=0.50 | n=2156 | MAE=0.9092
+  weight=0.60 | n=2156 | MAE=0.9020
+  weight=0.70 | n=2156 | MAE=0.8968
+  weight=0.80 | n=2156 | MAE=0.8934
+  weight=0.90 | n=2156 | MAE=0.8923
+  weight=1.00 | n=2156 | MAE=0.8930
+  weight=1.10 | n=2156 | MAE=0.8955
+  weight=1.20 | n=2156 | MAE=0.8996
+  >> BEST weight for ITALY_SERIE_A: 0.90 (MAE=0.8923)
+     Copy into LEAGUE_STRENGTH_WEIGHTS['ITALY_SERIE_A'] = 0.90
+
+-- Calibration: Goals markets --
+  OVER_0.5     n= 647 BrierRaw=0.0696 BrierCal=0.0699 ECERaw=0.0089 ECECal=0.0146 Improve=-0.0003
+  UNDER_0.5    n= 647 BrierRaw=0.0696 BrierCal=0.0699 ECERaw=0.0089 ECECal=0.0150 Improve=-0.0002
+  OVER_1.5     n= 647 BrierRaw=0.1932 BrierCal=0.1898 ECERaw=0.0420 ECECal=0.0521 Improve=+0.0034
+  UNDER_1.5    n= 647 BrierRaw=0.1932 BrierCal=0.1895 ECERaw=0.0420 ECECal=0.0516 Improve=+0.0037
+  OVER_2.5     n= 647 BrierRaw=0.2449 BrierCal=0.2436 ECERaw=0.0492 ECECal=0.0290 Improve=+0.0014
+  UNDER_2.5    n= 647 BrierRaw=0.2449 BrierCal=0.2434 ECERaw=0.0493 ECECal=0.0265 Improve=+0.0015
+  OVER_3.5     n= 647 BrierRaw=0.1926 BrierCal=0.1894 ECERaw=0.0307 ECECal=0.0232 Improve=+0.0032
+  UNDER_3.5    n= 647 BrierRaw=0.1926 BrierCal=0.1893 ECERaw=0.0307 ECECal=0.0225 Improve=+0.0033
+  BTTS_YES     n= 647 BrierRaw=0.2529 BrierCal=0.2478 ECERaw=0.0554 ECECal=0.0133 Improve=+0.0051
+  BTTS_NO      n= 647 BrierRaw=0.2529 BrierCal=0.2479 ECERaw=0.0554 ECECal=0.0096 Improve=+0.0050
+  HOME_WIN     n= 647 BrierRaw=0.2085 BrierCal=0.2082 ECERaw=0.0428 ECECal=0.0451 Improve=+0.0003
+  DRAW         n= 647 BrierRaw=0.2080 BrierCal=0.2070 ECERaw=0.0462 ECECal=0.0302 Improve=+0.0010
+  AWAY_WIN     n= 647 BrierRaw=0.1806 BrierCal=0.1812 ECERaw=0.0559 ECECal=0.0525 Improve=-0.0006
+
+-- Calibration: Shots markets --
+  SHOTS_OVER_18.5 n= 647 BrierRaw=0.1160 BrierCal=0.1164 ECERaw=0.0324 ECECal=0.0465 Improve=-0.0004
+  SHOTS_OVER_21.5 n= 647 BrierRaw=0.2057 BrierCal=0.2053 ECERaw=0.0429 ECECal=0.0448 Improve=+0.0003
+  SHOTS_OVER_24.5 n= 647 BrierRaw=0.2441 BrierCal=0.2451 ECERaw=0.0417 ECECal=0.0287 Improve=-0.0010
+  SHOTS_OVER_27.5 n= 647 BrierRaw=0.2044 BrierCal=0.2043 ECERaw=0.0329 ECECal=0.0507 Improve=+0.0000
+  SHOTS_UNDER_18.5 n= 647 BrierRaw=0.1160 BrierCal=0.1165 ECERaw=0.0324 ECECal=0.0446 Improve=-0.0006
+  SHOTS_UNDER_21.5 n= 647 BrierRaw=0.2057 BrierCal=0.2054 ECERaw=0.0429 ECECal=0.0450 Improve=+0.0003
+  SHOTS_UNDER_24.5 n= 647 BrierRaw=0.2441 BrierCal=0.2450 ECERaw=0.0417 ECECal=0.0282 Improve=-0.0009
+  SHOTS_UNDER_27.5 n= 647 BrierRaw=0.2044 BrierCal=0.2045 ECERaw=0.0329 ECECal=0.0497 Improve=-0.0001
+
+==========================================================================================
+Point-in-Time: ENABLED | Future Leakage Protection: ENABLED

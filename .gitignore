@@ -55,3 +55,4 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+!05_backtest/**/*.py

@@ -1,24 +1,22 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from src.contracts.decision import DecisionResult
 from src.contracts.enums import IntegrityStatus
 from src.contracts.match import MatchData
 from src.data.api_football_odds_parser import ApiFootballOddsParser
 from src.decision.engine import DecisionEngine
-from src.predictions.goal_prediction_engine import GoalPredictionEngine
+from src.markets.value_engine import ValueEngine
+from src.predictions.match_prediction_engine import MatchPrediction, MatchPredictionEngine
 
 
 class PredictionPipeline:
-    VERSION = "1.2.0"
+    VERSION = "3.0.0"
 
     def __init__(self) -> None:
         self.decision_engine = DecisionEngine()
-        self.prediction_engine = GoalPredictionEngine()
+        self.prediction_engine = MatchPredictionEngine()
 
-    def predict_match(
-        self,
-        match: MatchData,
-    ):
+    def predict_match(self, match: MatchData) -> MatchPrediction:
         return self.prediction_engine.predict_match(match)
 
     def evaluate_market(
@@ -26,14 +24,18 @@ class PredictionPipeline:
         match_id: str,
         market: str,
         probability: float,
-        confidence: float = 0.0,
-        data_quality: float = 0.0,
-        league_reliability: float = 0.0,
-        model_agreement: float = 0.0,
-        value: float = 0.0,
-        odds: float | None = None,
+        prediction: Optional[MatchPrediction] = None,
+        confidence: Optional[float] = None,
+        odds: Optional[float] = None,
         integrity_status: str = IntegrityStatus.LOW.value,
     ) -> DecisionResult:
+
+        if confidence is None:
+            confidence = abs((2 * probability) - 1)
+
+        data_quality = prediction.data_quality if prediction else 0.0
+        league_reliability = prediction.league_reliability if prediction else 0.0
+        model_agreement = prediction.model_agreement if prediction else 0.0
 
         return self.decision_engine.evaluate(
             match_id=match_id,
@@ -43,50 +45,37 @@ class PredictionPipeline:
             data_quality=data_quality,
             league_reliability=league_reliability,
             model_agreement=model_agreement,
-            value=value,
             odds=odds,
             integrity_status=integrity_status,
         )
 
     @staticmethod
-    def _market_probability(
-        prediction_markets: Dict[str, float],
-        market: str,
-        label: str,
-    ) -> float | None:
+    def _market_probability(prediction: MatchPrediction, market: str, label: str) -> Optional[float]:
 
         if market == "MATCH_WINNER":
-            mapping = {
-                "Home": "HOME_WIN",
-                "Draw": "DRAW",
-                "Away": "AWAY_WIN",
-            }
+            mapping = {"Home": "HOME_WIN", "Draw": "DRAW", "Away": "AWAY_WIN"}
             key = mapping.get(label)
-            return prediction_markets.get(key) if key else None
+            return prediction.goal_markets.get(key) if key else None
 
         if market == "GOALS_OVER_UNDER":
             key = label.upper().replace(" ", "_")
-            return prediction_markets.get(key)
+            return prediction.goal_markets.get(key)
 
         if market == "BTTS":
-            mapping = {
-                "Yes": "BTTS_YES",
-                "No": "BTTS_NO",
-            }
+            mapping = {"Yes": "BTTS_YES", "No": "BTTS_NO"}
             key = mapping.get(label)
-            return prediction_markets.get(key) if key else None
+            return prediction.goal_markets.get(key) if key else None
+
+        if market == "SHOTS_OVER_UNDER":
+            key = label.upper().replace(" ", "_")
+            return prediction.shot_markets.get(key)
 
         return None
 
     def evaluate_odds(
         self,
-        match_id: str,
-        prediction_markets: Dict[str, float],
+        prediction: MatchPrediction,
         bookmakers: List[Dict[str, Any]],
-        confidence: float = 0.0,
-        data_quality: float = 0.0,
-        league_reliability: float = 0.0,
-        model_agreement: float = 0.0,
         integrity_status: str = IntegrityStatus.LOW.value,
     ) -> List[DecisionResult]:
 
@@ -95,7 +84,6 @@ class PredictionPipeline:
         decisions: List[DecisionResult] = []
 
         for market, odds_list in parsed_markets.items():
-
             for item in odds_list:
                 label = item.get("label")
                 odds = item.get("odd")
@@ -103,39 +91,24 @@ class PredictionPipeline:
                 if label is None or odds is None:
                     continue
 
-                probability = self._market_probability(
-                    prediction_markets=prediction_markets,
-                    market=market,
-                    label=str(label),
-                )
+                probability = self._market_probability(prediction, market, str(label))
 
                 if probability is None:
                     continue
 
                 decision = self.evaluate_market(
-                    match_id=match_id,
+                    match_id=prediction.match_id,
                     market=f"{market}:{label}",
                     probability=probability,
-                    confidence=confidence,
-                    data_quality=data_quality,
-                    league_reliability=league_reliability,
-                    model_agreement=model_agreement,
+                    prediction=prediction,
                     odds=float(odds),
                     integrity_status=integrity_status,
                 )
 
                 decision.bookmaker = item.get("bookmaker")
 
-                value_result = None
-
                 if odds > 1.0:
-                    from src.markets.value_engine import ValueEngine
-
-                    value_result = ValueEngine.calculate(
-                        probability=probability,
-                        odds=float(odds),
-                    )
-
+                    value_result = ValueEngine.calculate(probability=probability, odds=float(odds))
                     decision.fair_odds = value_result.fair_odds
                     decision.value = value_result.value
                     decision.edge = value_result.edge
@@ -143,35 +116,23 @@ class PredictionPipeline:
                 decisions.append(decision)
 
         return decisions
-    @staticmethod
-    def select_best_odds(
-        decisions: List[DecisionResult],
-    ) -> List[DecisionResult]:
 
+    @staticmethod
+    def select_best_odds(decisions: List[DecisionResult]) -> List[DecisionResult]:
         best: Dict[str, DecisionResult] = {}
 
         for decision in decisions:
-            market_key = decision.market
-
-            current = best.get(market_key)
+            current = best.get(decision.market)
 
             if current is None:
-                best[market_key] = decision
+                best[decision.market] = decision
                 continue
 
-            current_value = current.value or 0.0
-            new_value = decision.value or 0.0
-
-            if new_value > current_value:
-                best[market_key] = decision
+            if (decision.value or 0.0) > (current.value or 0.0):
+                best[decision.market] = decision
 
         return list(best.values())
 
-    def rank(
-        self,
-        decisions: List[DecisionResult],
-    ) -> List[DecisionResult]:
-
-                best_decisions = self.select_best_odds(decisions)
-
+    def rank(self, decisions: List[DecisionResult]) -> List[DecisionResult]:
+        best_decisions = self.select_best_odds(decisions)
         return self.decision_engine.rank(best_decisions)
